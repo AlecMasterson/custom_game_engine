@@ -3,3 +3,7 @@
 /CustomGameEngine/.config/
 /CustomGameEngine/bin/
 /CustomGameEngine/obj/
+
+/MonoGameLibrary/.config/
+/MonoGameLibrary/bin/
+/MonoGameLibrary/obj/
