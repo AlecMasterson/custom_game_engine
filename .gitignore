@@ -1,0 +1,5 @@
+**/.vscode/
+
+/CustomGameEngine/.config/
+/CustomGameEngine/bin/
+/CustomGameEngine/obj/
