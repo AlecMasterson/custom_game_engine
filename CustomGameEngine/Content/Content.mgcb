@@ -1,0 +1,11 @@
+#----------------------------- Global Properties ----------------------------#
+
+/compress:False
+/config:
+/intermediateDir:obj/$(Platform)
+/outputDir:bin/$(Platform)
+/platform:DesktopGL
+/profile:Reach
+
+#-------------------------------- References --------------------------------#
+#---------------------------------- Content ---------------------------------#
