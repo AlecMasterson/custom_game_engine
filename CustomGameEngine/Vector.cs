@@ -13,7 +13,7 @@ public struct Vector(int x, int y) {
     public static bool operator ==(Vector a, Vector b) => a.X == b.X && a.Y == b.Y;
     public static bool operator !=(Vector a, Vector b) => !(a == b);
     public static Vector Zero => new(0, 0);
-    public override bool Equals(object obj) => obj is Vector other && this == other;
-    public override int GetHashCode() => HashCode.Combine(X, Y);
-    public override string ToString() => $"({X}, {Y})";
+    public override readonly bool Equals(object obj) => obj is Vector other && this == other;
+    public override readonly int GetHashCode() => HashCode.Combine(X, Y);
+    public override readonly string ToString() => $"({X}, {Y})";
 }
