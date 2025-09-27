@@ -10,6 +10,7 @@ public struct Vector(int x, int y) {
     public static Vector operator +(Vector a, Vector b) => new(a.X + b.X, a.Y + b.Y);
     public static Vector operator -(Vector a, Vector b) => new(a.X - b.X, a.Y - b.Y);
     public static Vector operator *(Vector a, int scalar) => new(a.X * scalar, a.Y * scalar);
+    public static Vector operator /(Vector a, int scalar) => new(a.X / scalar, a.Y / scalar);
     public static bool operator ==(Vector a, Vector b) => a.X == b.X && a.Y == b.Y;
     public static bool operator !=(Vector a, Vector b) => !(a == b);
     public static Vector Zero => new(0, 0);
