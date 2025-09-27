@@ -9,6 +9,18 @@ public static class WindowManager {
     private static Vector WindowDimensions;
     private static readonly int Zoom = 9;
 
+    public static int ZoomLevel => Zoom;
+
+    public static Vector ToRenderCoords(Vector position) {
+        Vector coords = ToWindowCoords(position);
+
+        // Get the top-left corner to support Monogame's rectangle drawing from top-left.
+        coords.X -= (Zoom - 1) / 2;
+        coords.Y += (Zoom - 1) / 2;
+
+        return coords;
+    }
+
     public static Vector ToWindowCoords(Vector position) {
         Vector coords = WindowCenter - ((CameraPosition - position) * Zoom);
         coords.Y = WindowDimensions.Y - coords.Y; // Invert Y-axis to support Monogame's top to bottom rendering.
