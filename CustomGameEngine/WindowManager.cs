@@ -1,29 +1,27 @@
 using System;
-using System.Numerics;
 
 namespace CustomGameEngine;
 
 public static class WindowManager {
 
-    private static Vector2 CameraPosition = new(0, 50);
-    private static Vector2 WindowDimensions;
+    private static Vector CameraPosition = new(0, 50);
+    private static Vector WindowCenter;
+    private static Vector WindowDimensions;
     private static readonly int Zoom = 9;
 
     public static Vector ToWindowCoords(Vector position) {
-        Vector2 center = new(WindowDimensions.X / 2f, WindowDimensions.Y / 2f);
-
-        Vector2 coords = center - ((CameraPosition - new Vector2(position.X, position.Y)) * Zoom);
+        Vector coords = WindowCenter - ((CameraPosition - position) * Zoom);
         coords.Y = WindowDimensions.Y - coords.Y; // Invert Y-axis to support Monogame's top to bottom rendering.
-
-        return new((int) Math.Round(coords.X), (int) Math.Round(coords.Y));
+        return coords;
     }
 
-    public static Vector ToWorldCoords(Vector2 position) {
-        Vector2 center = new(WindowDimensions.X / 2f, WindowDimensions.Y / 2f);
-
+    public static Vector ToWorldCoords(Vector position) {
         position.Y = WindowDimensions.Y - position.Y; // Invert Y-axis to support Monogame's top to bottom rendering.
-        Vector2 coords = CameraPosition + ((position - center) / Zoom);
+        return CameraPosition + ((position - WindowCenter) / Zoom);
+    }
 
-        return new((int) Math.Round(coords.X), (int) Math.Round(coords.Y));
+    public static void UpdateWindowDimensions(int width, int height) {
+        WindowDimensions = new(width, height);
+        WindowCenter = new((int) Math.Floor(WindowDimensions.X / 2f), (int) Math.Floor(WindowDimensions.Y / 2f));
     }
 }
