@@ -21,6 +21,7 @@ public class Voxel(int x, int y) {
     public Vector2 PositionReal = new(x, y);
     public Vector2 PositionRealPrev = Vector2.Zero;
 
+    public float Friction = 0.65f;
     public int Mass = 1;
 
     public void UpdatePhysics(float delta) {
@@ -29,11 +30,27 @@ public class Voxel(int x, int y) {
 
         VelocityPrev = Velocity;
         Velocity += Acceleration * delta;
+        Velocity = VectorUtil.AdjustMagnitude(Velocity, GetTotalFriction() * delta);
 
         PositionRealPrev = PositionReal;
         PositionReal += Velocity * delta;
 
         PositionPrev = Position;
         Position = new Vector((int) Math.Round(PositionReal.X), (int) Math.Round(PositionReal.Y));
+    }
+
+    private float GetTotalFriction() {
+        float friction = LogicNew.AirResistance;
+
+        if (MathF.Abs(Velocity.X) > MathF.Abs(Velocity.Y)) {
+            friction += LogicNew.GetFriction(Position + new Vector(0, -1));
+            friction += LogicNew.GetFriction(Position + new Vector(0, 1));
+        }
+        if (MathF.Abs(Velocity.Y) > MathF.Abs(Velocity.X)) {
+            friction += LogicNew.GetFriction(Position + new Vector(-1, 0));
+            friction += LogicNew.GetFriction(Position + new Vector(1, 0));
+        }
+
+        return -friction;
     }
 }
