@@ -10,7 +10,7 @@ public class Core : Game {
     public static Core Instance => s_instance;
 
     public static new ContentManager Content { get; private set; }
-    public static new GraphicsDevice GraphicsDevice { get; private set; }
+    public static GraphicsDevice GraphicsDevice2 { get; private set; }
     public static GraphicsDeviceManager Graphics { get; private set; }
     public static SpriteBatch SpriteBatch { get; private set; }
 
@@ -24,15 +24,18 @@ public class Core : Game {
         Graphics.IsFullScreen = isFullScreen;
         Graphics.PreferredBackBufferHeight = height;
         Graphics.PreferredBackBufferWidth = width;
+        // Graphics.SynchronizeWithVerticalRetrace = false;
         Graphics.ApplyChanges();
 
+        // IsFixedTimeStep = false;
         IsMouseVisible = true;
+        Window.AllowUserResizing = true;
         Window.Title = title;
     }
 
     protected override void Initialize() {
         base.Initialize();
-        GraphicsDevice = base.GraphicsDevice;
+        GraphicsDevice2 = base.GraphicsDevice;
         SpriteBatch = new SpriteBatch(GraphicsDevice);
     }
 }

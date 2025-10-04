@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using System.Threading;
 
@@ -21,10 +22,30 @@ public class Voxel(int x, int y) {
     public Vector2 PositionReal = new(x, y);
     public Vector2 PositionRealPrev = Vector2.Zero;
 
+    public bool AtRest = false;
     public float Friction = 0.65f;
     public int Mass = 1;
 
+    public void ChangeDirection(float deg, float delta) {
+        float cosA = MathF.Cos(deg);
+        float sinA = MathF.Sin(deg);
+
+        float x = (Velocity.X * cosA) - (Velocity.Y * sinA);
+        float y = (Velocity.X * sinA) + (Velocity.Y * cosA);
+
+        Velocity = new(x, y);
+
+        PositionReal = PositionRealPrev + (Velocity * delta);
+        Position = new((int) Math.Round(PositionReal.X), (int) Math.Round(PositionReal.Y));
+    }
+
     public void UpdatePhysics(float delta) {
+        if (AtRest) {
+            Acceleration = Vector2.Zero;
+            Velocity = Vector2.Zero;
+            return;
+        }
+
         AccelerationPrev = Acceleration;
         Acceleration = new Vector2(0, Logic.Gravity) / Mass;
 
